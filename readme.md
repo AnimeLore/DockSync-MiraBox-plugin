@@ -8,6 +8,10 @@
 2. Установить [последнюю версию аддона](https://github.com/AnimeLore/DockSync/releases/)
 3. Установить [последнюю версию плагина](https://github.com/AnimeLore/DockSync-MiraBox-plugin/releases) для MiraBox/Ajazz интерфейса 
 4. Запустить интерфейс MiraBox/Ajazz и Яндекс.Музыку в любом порядке
+   
+## Установка
+1. Загружаем архив и перебрасываем папку из него по пути `C:\Users\ИМЯ_ПОЛЬЗОВАТЕЛЯ\AppData\Roaming\HotSpot\StreamDock\plugins`
+2. Запускаем приложение для управления вашей мини-клавиатурой
 
 ## Для разработчиков
 Весь основной код находиться `plugin/index.js`, но класс подключения к вебсокету расположен в `plugin/utils/plugin.js`. Информацию про вебсокеты и допустимые запросы можно посмотреть в [репозитории аддона](https://github.com/AnimeLore/DockSync/releases/)
