@@ -1,0 +1,16 @@
+{
+  "name": "DockSync",
+  "version": "1.0.0",
+  "author": "AnimeLore",
+  "main": "index.js",
+  "description": "DockSync",
+  "scripts": {
+    "build": "ncc build index.js -m -o ./build && node autofile.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^11.3.0",
+    "log4js": "^6.9.1",
+    "ws": "^8.14.2"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "Name": "DockSync",
+  "Description": "DockSync",
+  "Category": "DockSync",
+  "com.animelore.docksync.yamusic.volumeknob": {
+    "Name": "Шаг громкости",
+    "Tooltip": "Шаг громкости"
+  },
+  "Localization": {
+	  "Шаг переключения громкости": "Шаг переключения громкости"
+  }
+}

@@ -1,0 +1,219 @@
+{
+  "Actions": [
+  {
+      "Icon": "static/mute.svg",
+      "Name": "Замутить звук",
+      "States": [
+        {
+          "Image": "static/mute.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Мутит звук плеера, работает криво",
+      "UUID": "com.animelore.docksync.yamusic.mute",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    },
+  {
+      "Icon": "static/prev-track.svg",
+      "Name": "Предыдущий трек",
+      "States": [
+        {
+          "Image": "static/prev-track.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Переключаем трек на предыдущий",
+      "UUID": "com.animelore.docksync.yamusic.prev",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    },
+  {
+      "Icon": "static/next-track.svg",
+      "Name": "Следующий трек",
+      "States": [
+        {
+          "Image": "static/next-track.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Переключаем трек на следующий",
+      "UUID": "com.animelore.docksync.yamusic.next",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    },
+  {
+      "Icon": "static/volume-down.svg",
+      "Name": "Уменьшить громкость",
+      "States": [
+        {
+          "Image": "static/volume-down.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Уменьшить громкость - для тех кому неудобно использовать крутилку",
+      "UUID": "com.animelore.docksync.yamusic.volumedown",
+      "PropertyInspectorPath": "propertyInspector/volume/index.html"
+    },
+   {
+      "Icon": "static/volume-up.svg",
+      "Name": "Увеличить громкость",
+      "States": [
+        {
+          "Image": "static/volume-up.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Увеличить громкость - для тех кому неудобно использовать крутилку",
+      "UUID": "com.animelore.docksync.yamusic.volumeup",
+      "PropertyInspectorPath": "propertyInspector/volume/index.html"
+    },
+  {
+      "Icon": "static/pause.svg",
+      "Name": "Пауза/Играть",
+      "States": [
+        {
+          "Image": "static/pause.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Ставьте трек на паузу/включайте его обратно одним нажатием",
+      "UUID": "com.animelore.docksync.yamusic.pauseplay",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    },
+  {
+      "Icon": "static/dislike.svg",
+      "Name": "Взаимодействие с дизлайком",
+      "States": [
+        {
+          "Image": "static/dislike.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Добавить/удалить из нелюбимого",
+      "UUID": "com.animelore.docksync.yamusic.dislike",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    },
+  {
+      "Icon": "static/like.svg",
+      "Name": "Взаимодействие с лайком",
+      "States": [
+        {
+          "Image": "static/like.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Добавить/удалить из любимого",
+      "UUID": "com.animelore.docksync.yamusic.like",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    },
+   {
+      "Icon": "static/repeat.svg",
+      "Name": "Переключение повтора",
+      "States": [
+        {
+          "Image": "static/repeat.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Включить повтор по плейлисту/треку/выключить повтор",
+      "UUID": "com.animelore.docksync.yamusic.repeat",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    },
+  {
+      "Icon": "static/shuffle.svg",
+      "Name": "Переключение шаффла",
+      "States": [
+        {
+          "Image": "static/shuffle.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Включить/выключить случайный порядок",
+      "UUID": "com.animelore.docksync.yamusic.shuffle",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    },
+	{
+      "Icon": "static/volume-down.svg",
+      "Name": "Управление громкостью",
+      "States": [
+        {
+          "Image": "static/volume-down.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Settings": {
+        "step": 20
+      },
+      "Controllers": [
+		"Knob"
+	  ],
+      "Tooltip": "Управление громкостью",
+      "UUID": "com.animelore.docksync.yamusic.volumeknob",
+      "PropertyInspectorPath": "propertyInspector/volume/index.html"
+    },
+	{
+      "Icon": "static/App-logo.png",
+      "Name": "Управление треком",
+      "States": [
+        {
+          "Image": "static/App-logo.png",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [
+		"Knob"
+	  ],
+      "Tooltip": "Управляйте треком при помощи крутилки! Вправо - следующий, влево - предыдущий, нажатие - ставит паузу!",
+      "UUID": "com.animelore.docksync.yamusic.trackknob",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    }
+	
+  ],
+  "SDKVersion": 1,
+  "Author": "AnimeLore",
+  "Name": "DockSync",
+  "Icon": "static/App-logo.png",
+  "CodePathWin": "plugin/index.js",
+  "CodePathMac": "plugin/index.js",
+  "Description": "DockSync это специальное расширение для управления приложением Yandex Music через плагин DockSync установленный в PulseSync",
+  "Category": "DockSync",
+  "CategoryIcon": "static/App-logo.png",
+  "Version": "0.0.1",
+  "URL": "https://mirabox.key123.vip/home",
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "10.11"
+    },
+    {
+      "Platform": "windows",
+      "MinimumVersion": "7"
+    }
+  ],
+  "Software": {
+    "MinimumVersion": "3.10.188.226"
+  },
+  "Nodejs": {
+    "Version": "20"
+  }
+}
