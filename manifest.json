@@ -1,6 +1,51 @@
 {
   "Actions": [
   {
+      "Icon": "static/App-logo.png",
+      "Name": "Отображение обложки трека",
+      "States": [
+        {
+          "Image": "static/mute.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Отображает обложку текущего трека",
+      "UUID": "com.animelore.docksync.yamusic.coverimg",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    },
+  {
+      "Icon": "static/trackVibe.svg",
+      "Name": "Включить волну по треку",
+      "States": [
+        {
+          "Image": "static/mute.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Включает волну по треку в приложении",
+      "UUID": "com.animelore.docksync.yamusic.trackvibe",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    },
+  {
+      "Icon": "static/globalVibe.svg",
+      "Name": "Включить волну",
+      "States": [
+        {
+          "Image": "static/mute.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Включает волну в приложении",
+      "UUID": "com.animelore.docksync.yamusic.vibe",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    },
+  {
       "Icon": "static/mute.svg",
       "Name": "Замутить звук",
       "States": [

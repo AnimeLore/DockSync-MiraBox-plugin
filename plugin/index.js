@@ -141,7 +141,33 @@ function generateSvg(key, state) {
 <line class="st0" x1="3" y1="3" x2="29" y2="29"/>
 <polyline class="st0" points="14,22 6,22 6,10 14,10 "/>
 <polyline class="st0" points="14,10 26,3 26,29 14,22 "/>
-</svg>`
+</svg>`,
+"globalVibe": (state_color) => `data:image/svg+xml;charset=utf8, <svg width="144" height="144" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style type="text/css">
+	.st0{fill:none;stroke:${state_color};stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:${state_color};stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<line class="st1" x1="4" y1="14" x2="4" y2="18"/>
+<line class="st1" x1="8" y1="12" x2="8" y2="20"/>
+<line class="st1" x1="12" y1="7" x2="12" y2="25"/>
+<line class="st1" x1="16" y1="14" x2="16" y2="18"/>
+<line class="st1" x1="20" y1="10" x2="20" y2="22"/>
+<line class="st1" x1="24" y1="7" x2="24" y2="25"/>
+<line class="st1" x1="28" y1="14" x2="28" y2="18"/>
+</svg>`,
+"trackVibe": (state_color) => `data:image/svg+xml;charset=utf8, <svg width="144" height="144" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<path d="M6 20.125V22.625" stroke="${state_color}" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8.5 18.875V23.875" stroke="${state_color}" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11 15.75V27" stroke="${state_color}" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.5 20.125V22.625" stroke="${state_color}" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16 17.625V25.125" stroke="${state_color}" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18.5 15.75V27" stroke="${state_color}" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21 20.125V22.625" stroke="${state_color}" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M23.3333 12.75C24.2538 12.75 25 12.1904 25 11.5C25 10.8096 24.2538 10.25 23.3333 10.25C22.4129 10.25 21.6667 10.8096 21.6667 11.5C21.6667 12.1904 22.4129 12.75 23.3333 12.75Z" stroke="${state_color}" stroke-miterlimit="10" stroke-linejoin="round"/>
+<path d="M16.6667 14C17.5871 14 18.3333 13.4404 18.3333 12.75C18.3333 12.0596 17.5871 11.5 16.6667 11.5C15.7462 11.5 15 12.0596 15 12.75C15 13.4404 15.7462 14 16.6667 14Z" stroke="${state_color}" stroke-miterlimit="10" stroke-linejoin="round"/>
+<path d="M18.3333 12.75V5.25L25 4V11.5" stroke="${state_color}" stroke-miterlimit="10" stroke-linejoin="round"/>
+</svg>
+`
 
 
 }
@@ -156,6 +182,110 @@ function generateSvg(key, state) {
 const timers = {};
 const WebSocketHandler_var = new WebSocketHandler();
 WebSocketHandler_var.updateStart();
+plugin.coverimg = new Actions({
+	default: {
+    },
+    async _willAppear({ context, payload }) {
+		timers[context] = setInterval(async () => {
+			let response = await WebSocketHandler_var.getCoverImage();
+				try {
+					var http = require('http');
+					http.get(response, (resp) => {
+						resp.setEncoding('base64');
+						body = "data:" + resp.headers["content-type"] + ";base64,";
+						resp.on('data', (data) => { body += data});
+						resp.on('end', () => {
+							plugin.setImage(context, body);
+						});
+					}).on('error', (e) => {
+						log.info(`Got error: ${e.message}`);
+					});
+				} catch(err) {
+					log.info("error with image idk bro");
+					log.info(err);
+					log.info(response);
+				}
+		}, 500);
+    },
+	
+    _willDisappear({ context }) {
+		timers[context] && clearInterval(timers[context]);
+    },
+    _propertyInspectorDidAppear({ context }) {
+    },
+    sendToPlugin({ payload, context }) {
+    },
+    keyUp({ context, payload }) {
+		
+    },
+    dialDown({ context, payload }) {
+
+	},
+    dialRotate({ context, payload }) {
+	}
+});
+plugin.trackvibe = new Actions({
+	default: {
+    },
+    async _willAppear({ context, payload }) {
+		plugin.setImage(context, generateSvg("trackVibe", "normal"));
+		timers[context] = setInterval(async () => {
+			let response = await WebSocketHandler_var.getVibeStatus();
+			if (response == 1) {
+				plugin.setImage(context, generateSvg("trackVibe", "active"));
+			} else {
+				plugin.setImage(context, generateSvg("trackVibe", "inactive"));
+			}
+		}, 500);
+    },
+	
+    _willDisappear({ context }) {
+		timers[context] && clearInterval(timers[context]);
+    },
+    _propertyInspectorDidAppear({ context }) {
+    },
+    sendToPlugin({ payload, context }) {
+    },
+    keyUp({ context, payload }) {
+			WebSocketHandler_var.broadcast({ request: 'trackVibeInteraction' });
+    },
+    dialDown({ context, payload }) {
+
+	},
+    dialRotate({ context, payload }) {
+	}
+});
+plugin.vibe = new Actions({
+	default: {
+    },
+    async _willAppear({ context, payload }) {
+		plugin.setImage(context, generateSvg("globalVibe", "normal"));
+		timers[context] = setInterval(async () => {
+			let response = await WebSocketHandler_var.getVibeStatus();
+			if (response == 1) {
+				plugin.setImage(context, generateSvg("globalVibe", "active"));
+			} else {
+				plugin.setImage(context, generateSvg("globalVibe", "inactive"));
+			}
+		}, 500);
+    },
+	
+    _willDisappear({ context }) {
+		timers[context] && clearInterval(timers[context]);
+    },
+    _propertyInspectorDidAppear({ context }) {
+    },
+    sendToPlugin({ payload, context }) {
+    },
+    keyUp({ context, payload }) {
+			WebSocketHandler_var.broadcast({ request: 'globalVibeInteraction' });
+    },
+    dialDown({ context, payload }) {
+
+	},
+    dialRotate({ context, payload }) {
+	}
+});
 plugin.mute = new Actions({
 	default: {
     },
