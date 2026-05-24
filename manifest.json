@@ -1,6 +1,88 @@
 {
   "Actions": [
   {
+      "Icon": "static/time-up.svg",
+      "Name": "Управление прогрессом трека",
+      "States": [
+        {
+          "Image": "static/time-up.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Settings": {
+        "step": 15
+      },
+      "Controllers": [
+		"Knob"
+	  ],
+      "Tooltip": "Управление прогрессом трека",
+      "UUID": "com.animelore.docksync.yamusic.timeknob",
+      "PropertyInspectorPath": "propertyInspector/time/index.html"
+    },
+  {
+      "Icon": "static/time-up.svg",
+      "Name": "Увеличить прогресс трека",
+      "States": [
+        {
+          "Image": "static/time-up.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Увеличить прогресс - для тех кому неудобно использовать крутилку",
+      "UUID": "com.animelore.docksync.yamusic.timeup",
+      "PropertyInspectorPath": "propertyInspector/time/index.html"
+    },
+  {
+      "Icon": "static/time-down.svg",
+      "Name": "Уменьшить прогресс трека",
+      "States": [
+        {
+          "Image": "static/time-down.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Уменьшить прогресс - для тех кому неудобно использовать крутилку",
+      "UUID": "com.animelore.docksync.yamusic.timedown",
+      "PropertyInspectorPath": "propertyInspector/time/index.html"
+    },
+  {
+      "Icon": "static/App-logo.png",
+      "Name": "Длина трека",
+      "States": [
+        {
+          "Image": "static/empty.svg",
+          "TitleAlignment": "center",
+          "FontSize": "12",
+		  "FontFamily": "Verdana"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Отображает максимальную длину трека",
+      "UUID": "com.animelore.docksync.yamusic.endtime",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    },
+  {
+      "Icon": "static/App-logo.png",
+      "Name": "Текущее время трека",
+      "States": [
+        {
+          "Image": "static/empty.svg",
+          "TitleAlignment": "center",
+          "FontSize": "12",
+		  "FontFamily": "Verdana"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Отображает текущий прогресс трека",
+      "UUID": "com.animelore.docksync.yamusic.currenttime",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    },
+  {
       "Icon": "static/App-logo.png",
       "Name": "Отображение обложки трека",
       "States": [
@@ -90,6 +172,7 @@
       "UUID": "com.animelore.docksync.yamusic.next",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
     },
+	
   {
       "Icon": "static/volume-down.svg",
       "Name": "Уменьшить громкость",

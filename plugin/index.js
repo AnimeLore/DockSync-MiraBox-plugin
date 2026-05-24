@@ -16,6 +16,8 @@ const createSvg = (text) => `<svg width="144" height="144" xmlns="http://www.w3.
 </svg>`;
 function generateSvg(key, state) {
 	const keys = {
+		"empty": (state_color) => `data:image/svg+xml;charset=utf8, <svg width="144" height="144" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
+`,
 		"shuffle": (state_color) => `data:image/svg+xml;charset=utf8,<svg version="1.1" height="144" width="144" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
 	 viewBox="0 0 32 32" xml:space="preserve">
 <style type="text/css">
@@ -167,9 +169,23 @@ function generateSvg(key, state) {
 <path d="M16.6667 14C17.5871 14 18.3333 13.4404 18.3333 12.75C18.3333 12.0596 17.5871 11.5 16.6667 11.5C15.7462 11.5 15 12.0596 15 12.75C15 13.4404 15.7462 14 16.6667 14Z" stroke="${state_color}" stroke-miterlimit="10" stroke-linejoin="round"/>
 <path d="M18.3333 12.75V5.25L25 4V11.5" stroke="${state_color}" stroke-miterlimit="10" stroke-linejoin="round"/>
 </svg>
-`
-
-
+`,
+"next_time": (state_color) =>`data:image/svg+xml;charset=utf8, <svg width="144" height="144" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style type="text/css">
+	.st0{fill:none;stroke:${state_color};stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<circle class="st0" cx="16" cy="16" r="13"/>
+<polyline class="st0" points="14,11.8 18.2,16 14,20.2 "/>
+</svg>
+`,
+"prev_time": (state_color) =>`data:image/svg+xml;charset=utf8, <svg width="144" height="144" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style type="text/css">
+	.st0{fill:none;stroke:${state_color};stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<circle class="st0" cx="16" cy="16" r="13"/>
+<polyline class="st0" points="18,20.2 13.8,16 18,11.8 "/>
+</svg>
+`,
 }
 
 	const states = {
@@ -182,6 +198,151 @@ function generateSvg(key, state) {
 const timers = {};
 const WebSocketHandler_var = new WebSocketHandler();
 WebSocketHandler_var.updateStart();
+
+plugin.timeup = new Actions({
+	default: {
+    },
+    async _willAppear({ context, payload }) {
+		plugin.setImage(context, generateSvg("next_time", "normal"));
+    },
+	
+    _willDisappear({ context }) {
+    },
+    _propertyInspectorDidAppear({ context }) {
+    },
+    sendToPlugin({ payload, context }) {
+    },
+    keyUp({ context, payload }) {
+		this.default.step = payload.settings.step || 15;
+		let stepComputed = this.default.step;
+		WebSocketHandler_var.broadcast({ request: 'time', message: stepComputed, how: 1 });
+    },
+    dialDown({ context, payload }) {
+
+	},
+    dialRotate({ context, payload }) {
+	}
+});
+plugin.timedown = new Actions({
+	default: {
+    },
+    async _willAppear({ context, payload }) {
+		plugin.setImage(context, generateSvg("prev_time", "normal"));
+    },
+	
+    _willDisappear({ context }) {
+    },
+    _propertyInspectorDidAppear({ context }) {
+    },
+    sendToPlugin({ payload, context }) {
+    },
+    keyUp({ context, payload }) {
+		this.default.step = payload.settings.step || 15;
+		let stepComputed = this.default.step;
+		WebSocketHandler_var.broadcast({ request: 'time', message: stepComputed, how: 0 });
+    },
+    dialDown({ context, payload }) {
+
+	},
+    dialRotate({ context, payload }) {
+	}
+});
+plugin.endtime = new Actions({
+	default: {
+    },
+    async _willAppear({ context, payload }) {
+		timers[context] = setInterval(async () => {
+			let response = await WebSocketHandler_var.getEndTime();
+				try {
+					plugin.setImage(context, generateSvg("empty", "active"));
+					plugin.setTitle(context, `${String(Math.floor(response / 60)).padStart(2,'0')}:${String(response % 60).padStart(2,'0')}`);
+				} catch(err) {
+					log.info("error with image endtime bro");
+					log.info(err);
+					log.info(response);
+				}
+		}, 500);
+    },
+	
+    _willDisappear({ context }) {
+		timers[context] && clearInterval(timers[context]);
+    },
+    _propertyInspectorDidAppear({ context }) {
+    },
+    sendToPlugin({ payload, context }) {
+    },
+    keyUp({ context, payload }) {
+		
+    },
+    dialDown({ context, payload }) {
+
+	},
+    dialRotate({ context, payload }) {
+	}
+});
+plugin.timeknob = new Actions({
+    default: {
+    },
+    async _willAppear({ context, payload }) {
+		plugin.setImage(context, generateSvg("next_time", "active"));
+    },
+	
+    _willDisappear({ context }) {
+    },
+    _propertyInspectorDidAppear({ context }) {
+    },
+    sendToPlugin({ payload, context }) {
+    },
+    keyUp({ context, payload }) {
+    },
+    dialDown({ context, payload }) {
+		
+	},
+    dialRotate({ context, payload }) {
+		log.info(context, payload.settings.step);
+		this.default.step = payload.settings.step || 15;
+		let stepComputed = this.default.step*payload.ticks;
+		let timeHow = 1;
+		if(stepComputed < 0) {
+			stepComputed = -1 * stepComputed;
+			timeHow = 0;
+		}
+		WebSocketHandler_var.broadcast({ request: 'time', message: stepComputed, how: timeHow });
+	}
+});
+plugin.currenttime = new Actions({
+	default: {
+    },
+    async _willAppear({ context, payload }) {
+		timers[context] = setInterval(async () => {
+			let response = await WebSocketHandler_var.getCurrentTime();
+				try {
+					plugin.setImage(context, generateSvg("empty", "active"));
+					plugin.setTitle(context, `${String(Math.floor(response / 60)).padStart(2,'0')}:${String(response % 60).padStart(2,'0')}`);
+				} catch(err) {
+					log.info("error with image currenttime bro");
+					log.info(err);
+					log.info(response);
+				}
+		}, 500);
+    },
+	
+    _willDisappear({ context }) {
+		timers[context] && clearInterval(timers[context]);
+    },
+    _propertyInspectorDidAppear({ context }) {
+    },
+    sendToPlugin({ payload, context }) {
+    },
+    keyUp({ context, payload }) {
+		
+    },
+    dialDown({ context, payload }) {
+
+	},
+    dialRotate({ context, payload }) {
+	}
+});
 plugin.coverimg = new Actions({
 	default: {
     },

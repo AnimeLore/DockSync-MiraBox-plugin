@@ -221,6 +221,8 @@ class WebSocketHandler {
 		this.likeStatus = 0;
 		this.playingStatus = 0;
 		this.vibeStatus = 0;
+		this.currentTime = 0;
+		this.endTime = 0;
 		this.coverImage = "";
         this.websocketserver = new ws.Server({ port: 8765 });
 		this.websocketserver.on('connection', (wso) => {
@@ -252,6 +254,12 @@ class WebSocketHandler {
 				case "coverImage":
 					this.coverImage = message.response;
 					break;
+				case "currentTime":
+					this.currentTime = message.response;
+					break;
+				case "endTime":
+					this.endTime = message.response;
+					break;
 			}
 		});
 			});
@@ -268,6 +276,8 @@ class WebSocketHandler {
 			this.broadcast({ request: 'playingState' });
 			this.broadcast({ request: 'vibeState' });
 			this.broadcast({ request: 'coverImage' });
+			this.broadcast({ request: 'currentTime' });
+			this.broadcast({ request: 'endTime' });
 		}, 300);
 	}
 	getVibeStatus() {
@@ -288,6 +298,12 @@ class WebSocketHandler {
 	}
 	getCoverImage() {
 		return this.coverImage;
+	}
+	getCurrentTime() {
+		return this.currentTime;
+	}
+	getEndTime() {
+		return this.endTime;
 	}
 	broadcast(message) {
 		try {
