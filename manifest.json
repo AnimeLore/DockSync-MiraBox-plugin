@@ -10,7 +10,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Отображение прогрессбара трека",
       "UUID": "com.animelore.docksync.yamusic.progress",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
@@ -45,7 +45,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Увеличить прогресс - для тех кому неудобно использовать крутилку",
       "UUID": "com.animelore.docksync.yamusic.timeup",
       "PropertyInspectorPath": "propertyInspector/time/index.html"
@@ -60,7 +60,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Уменьшить прогресс - для тех кому неудобно использовать крутилку",
       "UUID": "com.animelore.docksync.yamusic.timedown",
       "PropertyInspectorPath": "propertyInspector/time/index.html"
@@ -76,7 +76,7 @@
 		  "FontFamily": "Verdana"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Отображает максимальную длину трека",
       "UUID": "com.animelore.docksync.yamusic.endtime",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
@@ -92,7 +92,7 @@
 		  "FontFamily": "Verdana"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Отображает текущий прогресс трека",
       "UUID": "com.animelore.docksync.yamusic.currenttime",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
@@ -107,7 +107,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Отображает обложку текущего трека",
       "UUID": "com.animelore.docksync.yamusic.coverimg",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
@@ -122,7 +122,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Включает волну по треку в приложении",
       "UUID": "com.animelore.docksync.yamusic.trackvibe",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
@@ -137,7 +137,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Включает волну в приложении",
       "UUID": "com.animelore.docksync.yamusic.vibe",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
@@ -152,7 +152,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Мутит звук плеера, работает криво",
       "UUID": "com.animelore.docksync.yamusic.mute",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
@@ -167,7 +167,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Переключаем трек на предыдущий",
       "UUID": "com.animelore.docksync.yamusic.prev",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
@@ -182,7 +182,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Переключаем трек на следующий",
       "UUID": "com.animelore.docksync.yamusic.next",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
@@ -198,7 +198,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Уменьшить громкость - для тех кому неудобно использовать крутилку",
       "UUID": "com.animelore.docksync.yamusic.volumedown",
       "PropertyInspectorPath": "propertyInspector/volume/index.html"
@@ -213,7 +213,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Увеличить громкость - для тех кому неудобно использовать крутилку",
       "UUID": "com.animelore.docksync.yamusic.volumeup",
       "PropertyInspectorPath": "propertyInspector/volume/index.html"
@@ -228,7 +228,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Ставьте трек на паузу/включайте его обратно одним нажатием",
       "UUID": "com.animelore.docksync.yamusic.pauseplay",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
@@ -243,7 +243,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Добавить/удалить из нелюбимого",
       "UUID": "com.animelore.docksync.yamusic.dislike",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
@@ -258,7 +258,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Добавить/удалить из любимого",
       "UUID": "com.animelore.docksync.yamusic.like",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
@@ -273,7 +273,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Включить повтор по плейлисту/треку/выключить повтор",
       "UUID": "com.animelore.docksync.yamusic.repeat",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
@@ -288,7 +288,7 @@
           "FontSize": "8"
         }
       ],
-      "Controllers": [],
+      "Controllers": ["Keypad", "Information"],
       "Tooltip": "Включить/выключить случайный порядок",
       "UUID": "com.animelore.docksync.yamusic.shuffle",
       "PropertyInspectorPath": "propertyInspector/demo/index.html"
