@@ -3,6 +3,7 @@ const { execSync } = require('child_process');
 
 const plugin = new Plugins('DockSync');
 let glsettings = {};
+const progressAtlas = {};
 plugin.didReceiveGlobalSettings = ({ payload: { settings } }) => {
     log.info('didReceiveGlobalSettings', settings);
 	glsettings = settings;
@@ -14,9 +15,76 @@ const createSvg = (text) => `<svg width="144" height="144" xmlns="http://www.w3.
         ${text}
     </text>
 </svg>`;
+
+function recalcProgressAtlas(atlas, row) {
+	try {
+	if (atlas[row] && Object.keys(atlas[row]).length > 0) {
+		let sorted_atlas = Object.keys(atlas[row]);
+		sorted_atlas.sort();
+		let counted = 1;
+		// log.info(atlas);
+		sorted_atlas.forEach((key) => {
+			// log.info(typeof key);
+			if (!(typeof key == undefined)) {
+				key = parseInt(key);
+				if(key > 0 && atlas[row][`${key-1}`]) {
+							if(atlas[row][`${key+1}`]) {
+								atlas[row][`${key}`]["type"] ="middle";
+								atlas[row][`${key}`]["count"] = counted;
+								counted++;
+							} else {
+								atlas[row][`${key}`]["type"] ="r_corner";
+								atlas[row][`${key}`]["count"] = counted;
+								counted = 2;
+							}
+						} else if(atlas[row][`${key+1}`]) {
+							atlas[row][`${key}`]["type"] ="l_corner";
+							atlas[row][`${key}`]["count"] = 1;
+							counted++;
+						} else {
+							atlas[row][`${key}`]["type"] ="solo";
+							atlas[row][`${key}`]["count"] = -1;
+							counted = 1;
+						}
+				}
+		})
+	} else {
+		atlas[row][Object.keys(atlas[row])[0]].type = "solo";
+		atlas[row][Object.keys(atlas[row])[0]].count = -1;
+	}
+	} catch(err) {
+		// log.info("roflan")
+	}
+}
+function generateProgressSvg(type, percent, row) {
+	parts = Object.keys(progressAtlas[row]).length || 1;
+	// СДЕЛАТЬ МИДЛ ДЛЯ РАЗНОЙ ДЛИНЫ;
+	const keys = {
+		"solo" : (percentage, parts) => `data:image/svg+xml;charset=utf8,<svg width="144" height="144" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="3" y="12" width="${Math.round(27 * percentage)}" height="8" rx="0.5" fill="#BABABA"/>
+<rect x="2.5" y="11.5" width="27" height="9" rx="2.5" stroke="white"/>
+</svg>`,
+	"l_corner" : (percentage, parts) => `data:image/svg+xml;charset=utf8,<svg width="144" height="144" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="3" y="12" width="${Math.round(29 * [percentage * parts, 1][+ (percentage > (1 / parts))])}" height="8" rx="0.5" fill="#BABABA"/>
+<rect x="3" y="11.5" width="32" height="9" rx="2.5" stroke="white"/>
+</svg>
+`,
+"r_corner" : (percentage, parts) => `data:image/svg+xml;charset=utf8,<svg width="144" height="144" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="12" width="${Math.round(29 * [0, (percentage - ((1 / parts)* (parts-1)))*parts][+ (percentage > (1 / parts) * (parts - 1))])}" height="8" rx="0.5" fill="#BABABA"/>
+<rect x="-3" y="11.5" width="32" height="9" rx="2.5" stroke="white"/>
+</svg>
+`,
+"middle" : (percentage, parts) => `data:image/svg+xml;charset=utf8,<svg width="144" height="144" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="12" width="${Math.round(32 * [0, (percentage - (1 / parts))*parts][+ (percentage > (1 / parts))])}" height="8" rx="0.5" fill="#BABABA"/>
+<rect x="-3" y="11.5" width="38" height="9" rx="2.5" stroke="white"/>
+</svg>
+`
+	}
+	return keys[type](percent, parts);
+}
 function generateSvg(key, state) {
 	const keys = {
-		"empty": (state_color) => `data:image/svg+xml;charset=utf8, <svg width="144" height="144" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
+		"empty": (state_color) => `data:image/svg+xml;charset=utf8,<svg width="144" height="144" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
 `,
 		"shuffle": (state_color) => `data:image/svg+xml;charset=utf8,<svg version="1.1" height="144" width="144" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
 	 viewBox="0 0 32 32" xml:space="preserve">
@@ -199,6 +267,53 @@ const timers = {};
 const WebSocketHandler_var = new WebSocketHandler();
 WebSocketHandler_var.updateStart();
 
+plugin.progress = new Actions({
+	default: {
+    },
+    async _willAppear({ context, payload }) {
+		if(!progressAtlas[payload.coordinates.row]) {
+			progressAtlas[payload.coordinates.row] = {};
+		}
+		this.default[context] = {"column": payload.coordinates.column, "row":payload.coordinates.row}
+		progressAtlas[payload.coordinates.row][payload.coordinates.column] = {"type" : "solo", "count" :  -1};
+		timers[context] = setInterval(async () => {
+			// plugin.setTitle(context, `[${this.default[context].row}, ${this.default[context].column}]`)
+			let response_start = await WebSocketHandler_var.getCurrentTime();
+			let response_end = await WebSocketHandler_var.getEndTime();
+				try {
+					recalcProgressAtlas(progressAtlas, payload.coordinates.row);
+					plugin.setImage(context, generateProgressSvg(progressAtlas[payload.coordinates.row][payload.coordinates.column].type, response_start / response_end, payload.coordinates.row));
+					// log.info(progressAtlas);
+					// log.info(response_start / response_end, " /// ", Object.keys(progressAtlas[payload.coordinates.row]).length);
+				} catch(err) {
+					log.info("error with progress bro");
+					log.info(err);
+				}
+		}, 500);
+    },
+	
+    _willDisappear({ context }) {
+		timers[context] && clearInterval(timers[context]);
+		// log.info(`_willDisappear ${this.default[context].column}`);
+		delete progressAtlas[this.default[context].row][this.default[context].column];
+		if(Object.keys(progressAtlas[this.default[context].row]).length == 0) {
+			delete progressAtlas[this.default[context].row];
+		}
+		recalcProgressAtlas(progressAtlas, this.default[context].row);
+    },
+    _propertyInspectorDidAppear({ context }) {
+    },
+    sendToPlugin({ payload, context }) {
+    },
+    keyUp({ context, payload }) {
+		
+    },
+    dialDown({ context, payload }) {
+
+	},
+    dialRotate({ context, payload }) {
+	}
+});
 plugin.timeup = new Actions({
 	default: {
     },

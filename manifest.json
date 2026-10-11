@@ -1,6 +1,21 @@
 {
   "Actions": [
   {
+      "Icon": "static/App-logo.png",
+      "Name": "Прогрессбар трека",
+      "States": [
+        {
+          "Image": "static/time-up.svg",
+          "TitleAlignment": "center",
+          "FontSize": "8"
+        }
+      ],
+      "Controllers": [],
+      "Tooltip": "Отображение прогрессбара трека",
+      "UUID": "com.animelore.docksync.yamusic.progress",
+      "PropertyInspectorPath": "propertyInspector/demo/index.html"
+    },
+  {
       "Icon": "static/time-up.svg",
       "Name": "Управление прогрессом трека",
       "States": [
